@@ -32,13 +32,13 @@ define([
 			itemSelector: '> .item',
 			columnMaxWidth: 300,
 			columnMinWidth: 200,
-			keepAspectRetion: true
+			keepAspectRetio: true
 		},
 		
 		columns: {},
 		
 		items: [],
-				
+			
 		addItem: function(element) {
 			
 			var item = new Item({
@@ -47,15 +47,19 @@ define([
 			
 			this.items.push(item);
 			
+			this.$el.append(item.el);
+			
+			this.$el.trigger('item-added.fluid-grid', [item]);
+			
 			return this;
 		},
-		
+				
 		getColumnsCount: function() {
-			return Math.ceil(this.$el.width() / this.options.columnMaxWidth);
+			return Math.ceil(this.width / this.options.columnMaxWidth);
 		},
 		
 		getColumnWidth: function() {
-			return this.$el.width() / this.getColumnsCount();
+			return this.width / this.getColumnsCount();
 		},
 		
 		findSmallestColumn: function() {
@@ -86,14 +90,6 @@ define([
 			};
 		},
 		
-		getPosition: function(column) {
-			
-			return {
-				top: column.height,
-				left: (column.sort - 1) * this.getColumnWidth()
-			};
-		},
-		
 		render: function() {
 			
 			var self = this;
@@ -101,21 +97,27 @@ define([
 			this.$el
 				.css('position', 'relative');
 			
+			this.width = this.$el.width();
+			
 			this.createColumns();
 			
 			$.each(this.items, function(i, item) {
 				
 				var column = self.findSmallestColumn();
-				var position = self.getPosition(column);
 				
 				item
 					.render()
 					.resize({
 						width: self.getColumnWidth() 
-					}, self.options.keepAspectRetion)
-					.position(position);
+					}, self.options.keepAspectRetio);
 				
-				column.height += item.$el.height();
+				item
+					.position({
+						top: column.height,
+						left: (column.sort - 1) * self.getColumnWidth()
+					});
+
+				column.height += item.$el.outerHeight(true);
 			});
 			
 			return this;

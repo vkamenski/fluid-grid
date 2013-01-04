@@ -18,10 +18,14 @@ define([
 	
 		resize: function(size, keepAspectRatio) {
 			
-			this.$el.width(size.width);
+			var offset = this.$el.outerWidth(true) - this.$el.width();
+			
+			var width = size.width - offset;
+			
+			this.$el.width(width);
 			
 			if(keepAspectRatio) {
-				this.$el.height(size.width * this.getAspectRation());
+				this.$el.height(width * this.getAspectRation());
 			}
 			
 			return this;
