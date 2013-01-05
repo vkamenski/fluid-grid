@@ -601,6 +601,20 @@ define('fluid-grid',[
 			return smallest;
 		},
 		
+		findHighestColumn: function() {
+			var highest = null;
+			
+			$.each(this.columns, function(i, column) {
+				
+				if(!highest || highest.height < column.height) {
+					highest = column;
+				}
+			
+			});
+			
+			return highest;
+		},
+		
 		createColumns: function() {
 			
 			this.columns = {};
@@ -644,6 +658,13 @@ define('fluid-grid',[
 				column.height += item.$el.outerHeight(true);
 			});
 			
+			var highestColumn = this.findHighestColumn();
+			
+			if(highestColumn) {
+				this.$el
+					.height(highestColumn.height);
+			}
+				
 			return this;
 		}		
 		
