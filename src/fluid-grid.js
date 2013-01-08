@@ -142,7 +142,7 @@ define([
 				this.$el
 					.height(highestColumn.height);
 			}
-		
+
 			return this;
 		}		
 		

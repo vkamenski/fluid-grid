@@ -666,14 +666,15 @@ define('fluid-grid',[
 				this.$el
 					.height(highestColumn.height);
 			}
-		
+
 			return this;
 		}		
 		
 	});
 	
 	return Grid;
-});  var library = require('fluid-grid');
+});
+  var library = require('fluid-grid');
   if(typeof module !== 'undefined' && module.exports) {
     module.exports = library;
   } else if(globalDefine) {
