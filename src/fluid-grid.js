@@ -55,11 +55,22 @@ define([
 		},
 				
 		getColumnsCount: function() {
-			return Math.ceil(this.width / this.options.columnMaxWidth);
+			return Math.ceil(this.width / (this.options.columnMaxWidth + this.getItemsOffset()));
 		},
 		
 		getColumnWidth: function() {
 			return this.width / this.getColumnsCount();
+		},
+		
+		getItemsOffset: function() {
+			
+			var offset = 0;
+			
+			if(this.items[0]) {
+				offset = this.items[0].getOffset();
+			}
+			
+			return offset;
 		},
 		
 		findSmallestColumn: function() {

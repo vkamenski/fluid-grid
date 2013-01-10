@@ -485,9 +485,7 @@ define('item',[
 	
 		resize: function(size, keepAspectRatio) {
 			
-			var offset = this.$el.outerWidth(true) - this.$el.width();
-			
-			var width = size.width - offset;
+			var width = size.width - this.getOffset();
 			
 			this.$el.width(width);
 			
@@ -496,6 +494,13 @@ define('item',[
 			}
 			
 			return this;
+		},
+		
+		getOffset: function() {
+			
+			var offset = this.$el.outerWidth(true) - this.$el.width();
+			
+			return offset;
 		},
 		
 		getAspectRation: function() {
@@ -554,7 +559,7 @@ define('fluid-grid',[
 		
 		options: {
 			itemSelector: '> .item',
-			columnMaxWidth: 300,
+			columnMaxWidth: 200,
 			columnMinWidth: 200,
 			keepAspectRetio: true
 		},
@@ -579,11 +584,22 @@ define('fluid-grid',[
 		},
 				
 		getColumnsCount: function() {
-			return Math.ceil(this.width / this.options.columnMaxWidth);
+			return Math.ceil(this.width / (this.options.columnMaxWidth + this.getItemsOffset()));
 		},
 		
 		getColumnWidth: function() {
 			return this.width / this.getColumnsCount();
+		},
+		
+		getItemsOffset: function() {
+			
+			var offset = 0;
+			
+			if(this.items[0]) {
+				offset = this.items[0].getOffset();
+			}
+			
+			return offset;
 		},
 		
 		findSmallestColumn: function() {
