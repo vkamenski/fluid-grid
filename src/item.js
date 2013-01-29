@@ -20,7 +20,7 @@ define([
 			
 			var width = size.width - this.getOffset();
 			
-			this.$el.width(width);
+			this.$el.width(Math.ceil(width));
 			
 			if(keepAspectRatio) {
 				this.$el.height(width * this.getAspectRation());

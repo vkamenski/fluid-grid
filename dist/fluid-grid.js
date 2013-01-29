@@ -487,7 +487,7 @@ define('item',[
 			
 			var width = size.width - this.getOffset();
 			
-			this.$el.width(width);
+			this.$el.width(Math.ceil(width));
 			
 			if(keepAspectRatio) {
 				this.$el.height(width * this.getAspectRation());
@@ -559,7 +559,7 @@ define('fluid-grid',[
 		
 		options: {
 			itemSelector: '> .item',
-			columnMaxWidth: 200,
+			columnMaxWidth: 300,
 			columnMinWidth: 200,
 			keepAspectRetio: true
 		},
