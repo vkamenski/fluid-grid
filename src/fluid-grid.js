@@ -55,11 +55,23 @@ define([
 		},
 				
 		getColumnsCount: function() {
-			return Math.ceil(this.width / (this.options.columnMaxWidth + this.getItemsOffset()));
+			var count = Math.ceil(this.width / (this.options.columnMaxWidth + this.getItemsOffset()));
+			
+			if(count > this.items.length) {
+				count = this.items.length;
+			}
+
+			return count;
 		},
 		
 		getColumnWidth: function() {
-			return this.width / this.getColumnsCount();
+			var width = this.width / this.getColumnsCount();
+			
+			if(width > this.options.columnMaxWidth) {
+				width = this.options.columnMaxWidth;
+			}
+			
+			return width;
 		},
 		
 		getItemsOffset: function() {
