@@ -465,13 +465,76 @@ define('mixins/element',[
 	};
 	
 });
+define('image-loader',[
+	
+], function() {
+	
+	var queue = new Array();
+	
+	var loading = false;
+	
+	var dequeue = function () {
+		
+		var item = queue.shift();
+		
+		if(item) {
+			
+			loading = true;
+			
+			var src = item.image.data('src');
+			
+			item.image
+				.on('load', function() {
+					
+					item.def.resolve(item.image);
+					dequeue();
+				})
+				.on('error', function() {
+					
+					item.def.reject(item.image);
+					dequeue();
+				})
+				.attr('src', src);
+			
+		} else {
+			loading = false;
+		}
+	};
+		
+	var enqueue = function(image) {
+		
+		var def = $.Deferred();
+		
+		queue.push({
+			def: def,
+			image: $(image)
+		});
+				
+		return def.promise();
+	};
+	
+	return {
+		
+		load: function(image) {
+			
+			var def = enqueue(image);
+			
+			if(!loading) {
+				dequeue();
+			}
+			
+			return def;
+		}
+		
+	};
+});
 define('item',[
 	
 	'mixins/options',
-	'mixins/element'
+	'mixins/element',
+	'image-loader'
 	
-
-], function(OptionsMixin, ElementMixin) {
+], function(OptionsMixin, ElementMixin, imageLoader) {
 	
 	var Item = function(options) {
 		
@@ -522,7 +585,18 @@ define('item',[
 		
 		render: function() {
 			
+			var self = this;
+			
 			this.$el.css('position', 'absolute');
+			
+			this.$el.find('img').each(function(i, image) {
+				self.$el.addClass('loading');
+				
+				imageLoader.load(image).then(function(img) {
+					
+					self.$el.removeClass('loading');
+				});
+			});
 			
 			return this;
 		}

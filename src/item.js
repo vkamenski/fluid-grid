@@ -1,10 +1,10 @@
 define([
 	
 	'mixins/options',
-	'mixins/element'
+	'mixins/element',
+	'image-loader'
 	
-
-], function(OptionsMixin, ElementMixin) {
+], function(OptionsMixin, ElementMixin, imageLoader) {
 	
 	var Item = function(options) {
 		
@@ -55,7 +55,18 @@ define([
 		
 		render: function() {
 			
+			var self = this;
+			
 			this.$el.css('position', 'absolute');
+			
+			this.$el.find('img').each(function(i, image) {
+				self.$el.addClass('loading');
+				
+				imageLoader.load(image).then(function(img) {
+					
+					self.$el.removeClass('loading');
+				});
+			});
 			
 			return this;
 		}
