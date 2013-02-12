@@ -2,8 +2,8 @@ define([
 	
 	
 	'backbone',
-	'image-loader',
-	'mixins/data-options'
+	'fluid-grid/image-loader',
+	'fluid-grid/mixins/data-options'
 	
 ], function(Backbone, imageLoader, DataOptionsMixin) {
 	
