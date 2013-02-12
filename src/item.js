@@ -1,21 +1,20 @@
 define([
 	
-	'mixins/options',
-	'mixins/element',
-	'image-loader'
 	
-], function(OptionsMixin, ElementMixin, imageLoader) {
+	'backbone',
+	'image-loader',
+	'mixins/data-options'
 	
-	var Item = function(options) {
+], function(Backbone, imageLoader, DataOptionsMixin) {
+	
+	var Item = Backbone.View.extend({
 		
-		this
-			.setOptions(options)
-			.setElement(this.options.el)
-			.parseOptions(this.$el, 'fluidGrid');
-	};
-	
-	$.extend(Item.prototype, OptionsMixin, ElementMixin, {
-	
+		optionsPrefix: 'fluidGrid',
+		
+		initialize: function() {
+			this.parseOptions();
+		},
+		
 		resize: function(size, keepAspectRatio) {
 			
 			var width = size.width - this.getOffset();
@@ -71,6 +70,8 @@ define([
 			return this;
 		}
 	});
+	
+	_.extend(Item.prototype, DataOptionsMixin);
 	
 	return Item;	
 });
