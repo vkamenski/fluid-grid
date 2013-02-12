@@ -1,28 +1,18 @@
 define([
-
+	
 ], function() {
 	
 	return {
 		
-		options: {},
+		optionsPrefix: '',
 		
-		setOptions: function(options) {
-		
-			if (this.options) 
-				options = $.extend({}, this.options, options);
-			
-			this.options = options;
-			
-			return this;
-		},
-		
-		parseOptions: function(element, prefix) {
+		parseOptions: function() {
 			
 			var self = this;
 			
-			var data = $(element).data() || {};
+			var data = this.$el.data() || {};
 			
-			var reg = new RegExp("^" + prefix + "([a-zA-Z]+)");
+			var reg = new RegExp("^" + this.optionsPrefix + "([a-zA-Z]+)");
 			
 			$.each(data, function(name, value) {
 				
@@ -40,5 +30,4 @@ define([
 			return this;
 		}
 	};
-	
 });

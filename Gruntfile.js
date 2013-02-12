@@ -1,28 +1,36 @@
 module.exports = function(grunt) {
 
-  // Configure Grunt
   grunt.initConfig({
 
-    requirejs: {
-    	compile: {
-    		options: {
-    			mainConfigFile: "build.js"
-    		}
-    	}
-    },
-    uglify: {
-    	compile: {
-    		src: 'dist/fluid-grid.js',
-    		dest: 'dist/fluid-grid.min.js'
-        }
-    }
+	  	clean: ['dist'],
+				
+		requirejs: {
+			
+			build: {
+			
+				options: {
+					
+					paths: {
+						'backbone': '../vendor/backbone-min',
+						'underscore': '../vendor/underscore-min',
+						'jquery': '../vendor/jquery-1.9.0.min'
+					},
+					
+					baseUrl: 'src',
+			    	
+			    	name: 'fluid-grid',
+			    	
+			    	out: 'dist/fluid-grid.js',
+			    	
+			    	exclude: ['backbone', 'underscore', 'jquery']
+				}
+		
+			}
+		}
   });
 
-  // Load external tasks
   grunt.loadNpmTasks('grunt-contrib-requirejs');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-clean');
   
-  // Make task shortcuts
-  grunt.registerTask('default', ['requirejs:compile', 'uglify:compile']);
-
+  grunt.registerTask('default', ['clean', 'requirejs']);
 };

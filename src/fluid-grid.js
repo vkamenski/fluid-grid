@@ -1,33 +1,15 @@
 define([
 	
     'item',
-	'mixins/options',
-    'mixins/element'
+    'backbone',
+	'mixins/data-options'
 	
-], function(Item, OptionsMixin, ElementMixin) {
+], function(Item, Backbone, DataOptionsMixin) {
 	
-	var Grid = function(options) {
+	var Grid = Backbone.View.extend({
 		
-		var self = this;
-		
-		this
-			.setOptions(options)
-			.setElement(this.options.el)
-			.parseOptions(this.$el, 'fluidGrid');
-		
-		this.$el
-			.find(this.options.itemSelector)
-			.each(function(i, element) {
-				self.addItem(element);
-			});
-		
-		$(window).resize(function() {
-			self.render();
-		});
-	};
-	
-	$.extend(Grid.prototype, OptionsMixin, ElementMixin, {
-		
+		optionsPrefix: 'fluidGrid',
+			
 		options: {
 			itemSelector: '> .item',
 			columnMaxWidth: 300,
@@ -38,7 +20,25 @@ define([
 		columns: {},
 		
 		items: [],
+
+		initialize: function() {
 			
+			var self = this;
+			
+			this
+				.parseOptions();
+			
+			this.$el
+				.find(this.options.itemSelector)
+				.each(function(i, element) {
+					self.addItem(element);
+				});
+			
+			$(window).resize(function() {
+				self.render();
+			});
+		},
+		
 		addItem: function(element) {
 			
 			var item = new Item({
@@ -170,6 +170,8 @@ define([
 		}		
 		
 	});
+	
+	_.extend(Grid.prototype, DataOptionsMixin);
 	
 	return Grid;
 });
