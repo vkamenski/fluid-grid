@@ -15,7 +15,7 @@ define([
 			loading = true;
 			
 			var src = item.image.data('src');
-			
+		
 			item.image
 				.on('load', function() {
 					

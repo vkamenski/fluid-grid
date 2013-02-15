@@ -22,8 +22,7 @@ module.exports = function(grunt) {
 			    	
 			    	out: 'dist/fluid-grid.js',
 			    	
-			    	exclude: ['backbone', 'underscore', 'jquery'],
-			    	
+			    	exclude: ['backbone', 'underscore', 'jquery']
 				}
 		
 			}

@@ -4,7 +4,7 @@ define([
 	
 	return {
 		
-		optionsPrefix: '',
+		optionsPrefix: 'fluidGrid',
 		
 		parseOptions: function() {
 			

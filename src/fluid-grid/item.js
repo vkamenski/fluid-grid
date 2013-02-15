@@ -9,21 +9,25 @@ define([
 	
 	var Item = Backbone.View.extend({
 		
-		optionsPrefix: 'fluidGrid',
+		className: 'grid-item',
+		
+		options: {
+			preserveAspectRatio: true
+		},
 		
 		initialize: function() {
 			this.parseOptions();
 		},
 		
-		resize: function(size, keepAspectRatio) {
+		resize: function(size) {
 			
 			var width = size.width - this.getOffset();
 			
 			this.$el.width(Math.floor(width));
 			
-			if(keepAspectRatio) {
-				
-				var height = width * this.getAspectRation();
+			if(this.options.preserveAspectRatio) {
+			
+				var height = width * this.getAspectRatio();
 				
 				this.$el.height(Math.floor(height));
 			}
@@ -38,15 +42,15 @@ define([
 			return offset;
 		},
 		
-		getAspectRation: function() {
+		getAspectRatio: function() {
 			return this.options.height / this.options.width;
 		},
 		
 		position: function(position) {
 			
 			this.$el.css({
-				top: position.top || 0,
-				left: position.left || 0
+				'top': position.top || 0,
+				'left': position.left || 0
 			});
 			
 			return this;
