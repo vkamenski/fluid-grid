@@ -1,10 +1,10 @@
 define([
 	
-    'fluid-grid/item',
+    'grid/item',
     'backbone',
-	'fluid-grid/mixins/data-options',
-	'fluid-grid/viewports/fluid',
-	'fluid-grid/layouts/fluid',
+	'grid/mixins/data-options',
+	'grid/viewports/fluid',
+	'grid/layouts/fluid',
 	
 ], function(Item, Backbone, DataOptionsMixin) {
 	
@@ -27,7 +27,7 @@ define([
 		
 		setLayout: function(name) {
 			
-			var path = 'fluid-grid/layouts/' + name;
+			var path = 'grid/layouts/' + name;
 			
 			var Layout = require(path);
 			
@@ -54,7 +54,7 @@ define([
 			
 		setViewport: function(name) {
 			
-			var path = 'fluid-grid/viewports/' + name;
+			var path = 'grid/viewports/' + name;
 			
 			var Viewport = require(path);
 			

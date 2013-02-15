@@ -1,7 +1,7 @@
 define([
 	
     'backbone',
-	'fluid-grid/mixins/data-options'
+	'grid/mixins/data-options'
 	
 ], function(Backbone, DataOptionsMixin) {
 	
