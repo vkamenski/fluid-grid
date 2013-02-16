@@ -5,8 +5,10 @@ define([
 	
 ], function(Backbone, DataOptionsMixin) {
 	
-	var Viewport = Backbone.View.extend({
-		
+	var Viewport = Backbone.View
+		.extend(DataOptionsMixin)
+		.extend({
+			
 		className: 'grid-viewport',
 		
 		options: {
@@ -24,11 +26,13 @@ define([
 		},
 
 		getHeight: function() {
-			return this.$el.height();
+			var height = this.$el.height();
+			return height;
 		},
 		
 		getWidth: function() {
-			return this.$el.width();
+			var width = this.$el.width();
+			return width;
 		},
 		
 		resize: function() {
@@ -41,7 +45,7 @@ define([
 			var rate = Math.min(parent.width() / this.$el.width(), parent.height() /  this.$el.height());
 			
 			var width = this.$el.width() * rate;
-			
+			console.log(width / this.options.aspectRatio);
 			this.$el
 				.width(width)
 				.height(width / this.options.aspectRatio);
@@ -62,8 +66,6 @@ define([
 		}		
 		
 	});
-	
-	_.extend(Viewport.prototype, DataOptionsMixin);
 	
 	return Viewport;
 });

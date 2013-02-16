@@ -6,10 +6,12 @@ define([
 	'grid/viewports/fluid',
 	'grid/layouts/fluid',
 	
-], function(Item, Backbone, DataOptionsMixin) {
+], function(Item, Backbone, DataOptionsMixin, Viewport, Layout) {
 	
-	var Grid = Backbone.View.extend({
-		
+	var Grid = Backbone.View
+		.extend(DataOptionsMixin)
+		.extend({
+			
 		options: {
 			itemSelector: '> .grid-item',
 			layoutSelector: '> .grid-layout',
@@ -31,8 +33,7 @@ define([
 			
 			var Layout = require(path);
 			
-			var element = this.$el
-				.find(this.options.layoutSelector);
+			var element = this.$(this.options.layoutSelector);
 		
 			var options = {
 				viewport: this.viewport	
@@ -43,7 +44,7 @@ define([
 			}
 			
 			this.layout = new Layout(options);
-			
+		
 			if(!element.length) {
 				this.$el
 					.append(this.layout.el);
@@ -74,6 +75,7 @@ define([
 		},
 			
 		render: function() {
+			
 			var self = this;
 			
 			this
@@ -92,8 +94,6 @@ define([
 		}		
 		
 	});
-	
-	_.extend(Grid.prototype, DataOptionsMixin);
 	
 	return Grid;
 });

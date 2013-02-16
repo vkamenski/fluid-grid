@@ -1,0 +1,154 @@
+<!doctype html>
+<html>
+<head>
+  <title>Demo</title>
+
+  <script src="../vendor/require.js"></script>
+  <style type="text/css">
+  	html, body {height: 100%}
+	body {margin: 0; padding: 0;}
+	
+	.grid {
+		height: 100%;
+		width: 100%;
+		margin: 0 auto;
+	}
+  	.grid-layout{
+  		background: #b3b3b3;
+   	}
+  	.grid-item {
+		margin: 10px;
+	}
+	.grid-item img {
+		width: 100%;
+		display: block;
+		opacity: 1;
+		filter: alpha(opacity = 100);
+	}
+	.grid-item.loading img {
+		opacity: 0;
+		filter: alpha(opacity = 0);
+	}
+	
+	.first {
+		background: #cfcfcf;
+		float:left;
+		width: 50%;
+	}
+	
+	.second {
+		background: #232323;
+		float:left;
+		width: 50%;
+	}
+	
+  </style>
+</head>
+<body>
+
+	<div class="first">
+		<div class="grid" 
+			data-grid-aspect-ratio="1">
+			
+			<div class="grid-layout" 
+				data-grid-columns-count="2"
+				data-grid-column-max-width="300"
+				data-grid-align="center"
+				data-grid-vertical-align="center">
+			</div>	
+			 
+			<div class="grid-item loading" 
+				data-grid-width="612" 
+				data-grid-height="612">
+				<img data-src="images/1.jpg" src="data:image/gif,"/>
+			</div>
+			
+			<div class="grid-item loading" 
+				data-grid-width="612" 
+				data-grid-height="612">
+				<img data-src="images/1.jpg" src="data:image/gif,"/>
+			</div>
+			
+			<div class="grid-item loading" 
+				data-grid-width="612" 
+				data-grid-height="612">
+				<img data-src="images/1.jpg" src="data:image/gif,"/>
+			</div>
+			
+			<div class="grid-item loading" 
+				data-grid-width="612" 
+				data-grid-height="612">
+				<img data-src="images/1.jpg" src="data:image/gif,"/>
+			</div>
+			
+		</div>	
+	</div>
+	
+	<div class="second">
+		<div class="grid" 
+			data-grid-aspect-ratio="1">
+			
+			<div class="grid-layout" 
+				data-grid-columns-count="2"
+				data-grid-column-max-width="300"
+				data-grid-align="center"
+				data-grid-vertical-align="center">
+			</div>	
+			 
+			<div class="grid-item loading" 
+				data-grid-width="612" 
+				data-grid-height="612">
+				<img data-src="images/24.jpg" src="data:image/gif,"/>
+			</div>
+			
+			<div class="grid-item loading" 
+				data-grid-width="612" 
+				data-grid-height="612">
+				<img data-src="images/24.jpg" src="data:image/gif,"/>
+			</div>
+			
+			<div class="grid-item loading" 
+				data-grid-width="612" 
+				data-grid-height="612">
+				<img data-src="images/24.jpg" src="data:image/gif,"/>
+			</div>
+			
+			<div class="grid-item loading" 
+				data-grid-width="612" 
+				data-grid-height="612">
+				<img data-src="images/24.jpg" src="data:image/gif,"/>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		requirejs.config({
+			baseUrl: '../' + (document.location.hash == '#dist'? 'dist': 'src'),
+			paths: {
+				'backbone': '../vendor/backbone-min',
+				'underscore': '../vendor/underscore-min',
+				'jquery': '../vendor/jquery-1.9.0.min'
+			},
+			shim: {
+				backbone: {
+					deps: ['jquery', 'underscore'],
+			    	exports: 'Backbone'
+				}
+			}
+		});
+		
+		require(['grid'],function(Grid){
+			
+			$('.grid').each(function(i, el) {
+				
+				new Grid({
+					el: $(el)
+				})
+				.render();
+				
+			});
+			
+		});	
+	</script>
+</body>
+</html>

@@ -5,8 +5,10 @@ define([
 	
 ], function(Backbone, DataOptionsMixin) {
 	
-	var Layout = Backbone.View.extend({
-		
+	var Layout = Backbone.View
+		.extend(DataOptionsMixin)
+		.extend({
+			
 		className: 'grid-layout',
 		
 		options: {
@@ -14,17 +16,17 @@ define([
 			columnsCount: null,
 			align: 'left',
 			verticalAlign: 'top'
-		},
-		
-		viewport: null,
-		
-		columns: {},
-		
-		items: [],
+		},		
 		
 		initialize: function() {
 			
 			_.bindAll(this);
+			
+			this.viewport = null;
+			
+			this.columns = {};
+			
+			this.items = [];
 			
 			this
 				.parseOptions();
@@ -139,7 +141,7 @@ define([
 				item
 					.resize({
 						width: self.getColumnWidth() 
-					}, true);
+					});
 				
 				item
 					.position({
@@ -158,11 +160,11 @@ define([
 		},
 		
 		align: function() {
-			
+		
 			if(this.options.align == 'center') {
 				
 				var left = this.viewport.getWidth() / 2 - this.getWidth() / 2;
-				
+			
 				this.$el.css('left', left);
 				
 			} else if(this.options.align == 'right') {
@@ -206,8 +208,6 @@ define([
 		}		
 		
 	});
-	
-	_.extend(Layout.prototype, DataOptionsMixin);
 	
 	return Layout;
 });
