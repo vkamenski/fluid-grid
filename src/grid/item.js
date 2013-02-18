@@ -2,10 +2,9 @@ define([
 	
 	
 	'backbone',
-	'grid/image-loader',
 	'grid/mixins/data-options'
 	
-], function(Backbone, imageLoader, DataOptionsMixin) {
+], function(Backbone, DataOptionsMixin) {
 	
 	var Item = Backbone.View.extend({
 		
@@ -61,14 +60,6 @@ define([
 			var self = this;
 			
 			this.$el.css('position', 'absolute');
-			
-			this.$el.find('img').each(function(i, image) {
-				
-				imageLoader.load(image).then(function(img) {
-					
-					self.$el.removeClass('loading');
-				});
-			});
 			
 			return this;
 		}
