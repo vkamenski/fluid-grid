@@ -45,7 +45,7 @@ define([
 			var rate = Math.min(parent.width() / this.$el.width(), parent.height() /  this.$el.height());
 			
 			var width = this.$el.width() * rate;
-			console.log(width / this.options.aspectRatio);
+		
 			this.$el
 				.width(width)
 				.height(width / this.options.aspectRatio);

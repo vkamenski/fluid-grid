@@ -77,23 +77,34 @@
 			paths: {
 				'backbone': '../vendor/backbone-min',
 				'underscore': '../vendor/underscore-min',
-				'jquery': '../vendor/jquery-1.9.0.min'
+				'jquery': '../vendor/jquery-1.9.0.min',
+				'loading-queue': '../vendor/jquery.loading-queue.min'
 			},
 			shim: {
-				backbone: {
+				'loading-queue': {
+					deps: ['jquery'],
+			    	exports: '$'
+				},
+				
+				'backbone': {
 					deps: ['jquery', 'underscore'],
 			    	exports: 'Backbone'
 				}
 			}
 		});
 		
-		require(['grid'],function(FluidGallery){
+		require(['grid', 'loading-queue'],function(FluidGallery){
 			
 				(new FluidGallery({
 					el: $(".grid")
 				}))
 				.render();	
-			
+
+				$('img').each(function() {
+					$(this).loadingQueue().then(function(img) {
+						$(img).parent('.grid-item').removeClass('loading');
+					});				
+				});
 		});	
 	</script>
 </body>
