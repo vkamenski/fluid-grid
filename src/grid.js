@@ -1,12 +1,13 @@
 define([
 	
-    'grid/item',
     'backbone',
 	'grid/mixins/data-options',
+	
 	'grid/viewports/fluid',
 	'grid/layouts/fluid',
+	'grid/items/base'
 	
-], function(Item, Backbone, DataOptionsMixin, Viewport, Layout) {
+], function(Backbone, DataOptionsMixin) {
 	
 	var Grid = Backbone.View
 		.extend(DataOptionsMixin)
@@ -16,6 +17,7 @@ define([
 			itemSelector: '> .grid-item',
 			layoutSelector: '> .grid-layout',
 			viewport: 'fluid',
+			item: 'base',
 			layout: 'fluid'			
 		},
 
@@ -67,7 +69,11 @@ define([
 		},
 			
 		addItem: function(element) {
-		
+			
+			var path = 'grid/items/' + this.options.item;
+			
+			var Item = require(path);
+			
 			return this.layout.add(new Item({
 				el: $(element)
 			}))

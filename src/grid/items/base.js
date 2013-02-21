@@ -6,12 +6,15 @@ define([
 	
 ], function(Backbone, DataOptionsMixin) {
 	
-	var Item = Backbone.View.extend({
-		
+	var Item = Backbone.View
+		.extend(DataOptionsMixin)
+		.extend({
+			
 		className: 'grid-item',
 		
 		options: {
-			preserveAspectRatio: true
+			preserveAspectRatio: true,
+			aspectRatio: null
 		},
 		
 		initialize: function() {
@@ -26,10 +29,16 @@ define([
 			
 			if(this.options.preserveAspectRatio) {
 			
-				var height = width * this.getAspectRatio();
+				var height = width / this.getAspectRatio();
+				
+				if(size.height && height > size.height) {
+					height = size.height;
+				}
 				
 				this.$el.height(Math.floor(height));
 			}
+			
+			this.$el.trigger('resized.grid');
 			
 			return this;
 		},
@@ -42,7 +51,14 @@ define([
 		},
 		
 		getAspectRatio: function() {
-			return this.options.height / this.options.width;
+			
+			var aspectRatio = this.options.aspectRatio;
+			
+			if(!aspectRatio) {
+				aspectRatio = this.options.height / this.options.width;
+			}
+			
+			return aspectRatio;
 		},
 		
 		position: function(position) {
@@ -57,15 +73,13 @@ define([
 		
 		render: function() {
 			
-			var self = this;
-			
-			this.$el.css('position', 'absolute');
+			this.$el
+				.css('position', 'absolute')
+				this.$el.trigger('rendered.grid');
 			
 			return this;
 		}
 	});
-	
-	_.extend(Item.prototype, DataOptionsMixin);
 	
 	return Item;	
 });

@@ -12,7 +12,9 @@ define([
 		className: 'grid-viewport',
 		
 		options: {
-			aspectRatio: null
+			aspectRatio: null,
+			align: 'left',
+			verticalAlign: 'top'
 		},
 		
 		initialize: function() {
@@ -50,7 +52,39 @@ define([
 				.width(width)
 				.height(width / this.options.aspectRatio);
 			
+			this.align();
+			
 			this.trigger('resized');
+		},
+		
+
+		align: function() {
+		
+			if(this.options.align == 'center') {
+				
+				var left = this.$el.parent().width() / 2 - this.getWidth() / 2;
+			
+				this.$el.css('left', left);
+				
+			} else if(this.options.align == 'right') {
+				
+				var left = this.$el.parent().width() - this.getWidth();
+				
+				this.$el.css('left', left);				
+			}
+			
+			if(this.options.verticalAlign == 'center') {
+				
+				var top = this.$el.parent().height() / 2 - this.getHeight() / 2;
+				
+				this.$el.css('top', top);
+				
+			} else if(this.options.verticalAlign == 'bottom') {
+				
+				var top = this.$el.parent().height() - this.getHeight();
+				
+				this.$el.css('top', top);				
+			}
 		},
 		
 		render: function() {

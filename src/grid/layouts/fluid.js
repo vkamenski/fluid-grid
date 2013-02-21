@@ -12,7 +12,8 @@ define([
 		className: 'grid-layout',
 		
 		options: {
-			columnMaxWidth: 400,
+			itemMaxWidth: null,
+			itemMaxHeight: null,
 			columnsCount: null,
 			align: 'left',
 			verticalAlign: 'top'
@@ -41,8 +42,8 @@ define([
 			
 			var width = this.viewport.getWidth() / this.getColumnsCount();
 			
-			if(this.options.columnMaxWidth && width > this.options.columnMaxWidth) {
-				width = this.options.columnMaxWidth;
+			if(this.options.itemMaxWidth && width > this.options.itemMaxWidth) {
+				width = this.options.itemMaxWidth;
 			}
 			
 			return width;
@@ -55,7 +56,7 @@ define([
 			if(this.options.columnsCount) {
 				count = this.options.columnsCount;
 			} else {
-				count = Math.ceil(this.viewport.getWidth() / this.options.columnMaxWidth);
+				count = Math.ceil(this.viewport.getWidth() / this.options.itemMaxWidth);
 			}
 			
 			if(count > this.items.length) {
@@ -140,7 +141,8 @@ define([
 				
 				item
 					.resize({
-						width: self.getColumnWidth() 
+						width: self.getColumnWidth(), 
+						height: self.options.itemMaxHeight
 					});
 				
 				item
