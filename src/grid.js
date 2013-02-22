@@ -45,6 +45,10 @@ define([
 				options.el = element;
 			}
 			
+			if(this.options.columnWidth) {
+				options.columnWidth = this.options.columnWidth;
+			}
+			
 			this.layout = new Layout(options);
 		
 			if(!element.length) {

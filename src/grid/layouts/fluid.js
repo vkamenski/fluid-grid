@@ -15,6 +15,7 @@ define([
 			itemMaxWidth: null,
 			itemMaxHeight: null,
 			columnsCount: null,
+			columnWidth: null,
 			align: 'left',
 			verticalAlign: 'top'
 		},		
@@ -40,10 +41,24 @@ define([
 		
 		getColumnWidth: function() {
 			
-			var width = this.viewport.getWidth() / this.getColumnsCount();
+			var width = 0;
 			
-			if(this.options.itemMaxWidth && width > this.options.itemMaxWidth) {
-				width = this.options.itemMaxWidth;
+			if(_.isNull(this.options.columnWidth)) {
+				
+				width = this.viewport.getWidth() / this.getColumnsCount();
+				
+				if(this.options.itemMaxWidth && width > this.options.itemMaxWidth) {
+					width = this.options.itemMaxWidth;
+				}
+				
+			} else if(_.isFunction(this.options.columnWidth)) {
+				
+				width = this.options.columnWidth.apply(this);
+			
+			} else {
+				
+				width = this.options.columnWidth;
+					
 			}
 			
 			return width;
@@ -56,7 +71,7 @@ define([
 			if(this.options.columnsCount) {
 				count = this.options.columnsCount;
 			} else {
-				count = Math.ceil(this.viewport.getWidth() / this.options.itemMaxWidth);
+				count = Math.ceil(this.viewport.getWidth() / this.getColumnWidth());
 			}
 			
 			if(count > this.items.length) {
