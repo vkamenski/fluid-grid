@@ -219,8 +219,10 @@ define([
 			this.$el.css({
 				'position': 'absolute',
 				'visibility': 'visible'
-			});			
+			});		
 			
+			_.invoke(this.items, 'render');
+						
 			return this;
 		}		
 		

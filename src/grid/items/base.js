@@ -22,6 +22,8 @@ define([
 		},
 		
 		resize: function(size) {
+
+			this.trigger('resize:before');
 			
 			var width = size.width - this.getOffset();
 			
@@ -38,7 +40,7 @@ define([
 				this.$el.height(Math.floor(height));
 			}
 			
-			this.$el.trigger('resized.grid');
+			this.trigger('resize:after');
 			
 			return this;
 		},
@@ -73,9 +75,12 @@ define([
 		
 		render: function() {
 			
+			this.trigger('render:before');
+			
 			this.$el
-				.css('position', 'absolute')
-				this.$el.trigger('rendered.grid');
+				.css('position', 'absolute');
+			
+			this.trigger('render:after');
 			
 			return this;
 		}

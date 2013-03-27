@@ -18,15 +18,26 @@ define([
 			layoutSelector: '> .grid-layout',
 			viewport: 'fluid',
 			item: 'base',
-			layout: 'fluid'			
+			layout: 'fluid'		
 		},
 
 		initialize: function() {
+			
+			var self = this;
 			
 			_.bindAll(this);
 			
 			this
 				.parseOptions();
+			
+			this
+				.setViewport(this.options.viewport)
+				.setLayout(this.options.layout);
+		
+			this.$(this.options.itemSelector)
+				.each(function(i, element) {
+					self.addItem(element);
+				});
 		},
 		
 		setLayout: function(name) {
@@ -76,27 +87,15 @@ define([
 			
 			var path = 'grid/items/' + this.options.item;
 			
-			var Item = require(path);
-			
-			return this.layout.add(new Item({
+			var item = new (require(path))({
 				el: $(element)
-			}))
-			.render();
+			});
+						
+			return this.layout.add(item);
 		},
-			
+					
 		render: function() {
-			
-			var self = this;
-			
-			this
-				.setViewport(this.options.viewport)
-				.setLayout(this.options.layout);
-			
-			this.$(this.options.itemSelector)
-				.each(function(i, element) {
-					self.addItem(element);
-				});
-			
+									
 			this.viewport.render();
 			this.layout.render();
 			
